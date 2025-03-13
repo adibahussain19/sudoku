@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename = 'practice.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let practice = {{practice|tojson}}
+
+        show_question(practice)
+
+        $("#next_button").click(function () {
+            let favorite=[]
+            if ("{{practice.next_practice}}" == "end") {
+                window.location.href = "/playgame";
+            } else {
+                window.location.href = "/practice/{{practice.next_practice}}";
+            }
+        })
+
+        $('#submit_button').on('click',function(){
+            
+            if (practice.practice_id==1 | practice.practice_id==2){
+                let answer
+                answer=$(".practice-input").val()
+                //console.log(answer)
+                practice_submit(answer,practice)
+
+            }
+   
+            else{
+                let answer=[]
+                $.each($("input[name='Browser']:checked"), function(){
+                    answer.push($(this).val());
+                });
+                //console.log(answer)
+                practice_submit(answer,practice)
+            }
+            
+        })
+
+    })
+
+    
+</script>
+
+
+<style>
+    .title-box{
+        padding-top: 20px;
+        height: 80px;
+        text-align: center;
+        font-size: xx-large;
+        font-weight: 700;
+    }
+
+    .subtitle-box{
+        text-align: center;
+        font-weight: 200;
+    }
+
+    img {
+        max-width: 330px;
+        max-height: 300px;
+        
+      }
+    .practice_img{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;  /* Centering y-axis */
+        align-items :center; /* Centering x-axis */
+    }
+
+    #question_text,
+    #question_answer{
+        font-weight: 300;
+        text-align: center;
+        
+    }
+
+    #practice-input{
+        border-style: solid;
+        border-width: 5px;
+    }
+
+    .redwarning{
+        color:red
+    }
+
+    .greenanswer{
+        color:green;
+        font-weight: bolder;
+    }
+
+    .redanswer{
+        color:red;
+        font-weight: bolder;
+    }
+
+    .question{
+        min-width: 350px;
+    }
+
+    .buttonbar{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    #practice_warning{
+        height: 90px;
+    }
+
+    .btn {
+    margin-top: 20px;
+    font-weight: bold;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #dff0e2;
+    color: black
+  }
+
+</style>
+
+
+
+<body>
+    <div class="title-box">
+        {{practice.title}}
+    </div>
+
+    <div class="subtitle-box">
+        {{practice.subtitle}}
+    </div>
+
+    <div class="row">
+        <div class="col-s-12 col-md-1"></div>
+
+
+        <div class="col-s-12 col-md-5 ">
+            <br>
+            <div class="practice_img" style="height: 300px;">
+                <img src="{{practice.image}}">
+            </div>
+        </div>
+
+
+        <div class="col-s-12 col-md-5">
+            <div class="question">
+                 <br><br><br>
+
+                <div id="question_box">
+                </div>
+
+                <div id="practice_warning" ></div>
+                
+                <br>
+                <div class="buttonbar">
+                    <button id="submit_button" class="btn btn-info"> {{practice.button_submit_text}} </button>
+                    <button id="next_button" class="btn btn-info"> {{practice.button_text}} </button>
+                </div>
+            
+            </div>
+
+        </div>
+
+
+        <div class="col-s-12 col-md-1"></div>
+
+    </div>
+    
+    
+    
+    
+
+</body>
+
+
+{% endblock %}
+
+
+
+
+
+

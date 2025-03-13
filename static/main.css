@@ -1,0 +1,78 @@
+.sudoku-board {
+    min-height: 0.75rem;
+    margin-top: 3px;
+    margin-bottom: 1em;
+}
+
+.sudoku-board-cell {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #ddd;
+    background: white;
+    max-width: 15.11111%;
+    margin-right: -5px;
+}
+
+.sudoku-board-cell input {
+    background: none;
+    font-size: 19.2px;
+    font-size: 1.2rem;
+    text-align: center;
+    width: 2em;
+    max-width: 100%;
+    height: 2em;
+    border: 0;
+    position: relative;
+    z-index: 1; /*on top of candidates*/
+    padding: 3px;
+}
+
+* {
+    margin:0; padding:0;
+  }
+
+
+  [data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(6n+1) {
+    border-left-width: 2px;
+    border-left-color: #808080;
+   }
+   
+   [data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n):nth-of-type(-n+6) {
+    border-top-width: 2px;
+    border-top-color: #808080;
+   }
+   
+   [data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(3n) {
+    border-right-width: 2px;
+    border-right-color: #808080;
+   }
+   
+   [data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n+7):nth-of-type(-n+12), 
+   [data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n+19):nth-of-type(-n+24),
+   [data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n+31):nth-of-type(-n+36){
+    border-bottom-width: 2px;
+    border-bottom-color: #808080;
+   }
+
+
+   .wrap {
+    padding: 2em 1em;
+    width: 340px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+   }
+
+   @media(min-width: 30em) {
+    /* .wrap {
+     width: 490px;
+    } */
+    .sudoku-board input {
+     font-size: 24px;
+     font-size: 1.5rem;
+    }
+   
+   }
+
+
+

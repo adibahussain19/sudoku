@@ -1,0 +1,69 @@
+{% extends "layout.html" %} {% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename = 'rules.js') }}"></script>
+
+<style>
+  .center {
+    text-align: center;
+  }
+
+  .photo {
+    height: 400px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: x-large;
+    text-align: center;
+    margin-top: 20px; 
+  }
+
+  .text {
+    font-size: large;
+    font-weight: 300;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .next {
+    margin-top: 20px;
+    font-weight: bold;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #dff0e2;
+  }
+</style>
+
+<body>
+  <script type="text/javascript">
+    let rule = {{ rule| tojson}};
+  </script>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 title">
+        <h>{{rule.title}}</h>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text">{{rule.text}}</div>
+    </div>
+    <div class="row">
+      <div class="col-12 center">
+        <img class="photo" src="{{rule.image}}" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-9"></div>
+      <div class="col-3">
+        <button id="next_button" class="next">{{rule.button_text}}</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock %}

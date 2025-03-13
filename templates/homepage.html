@@ -1,0 +1,60 @@
+{% extends "layout.html" %} {% block content %}
+<style>
+  .center {
+    text-align: center;
+  }
+
+  .photo {
+    height: 400px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: x-large;
+  }
+
+  .text {
+    font-size: x-large;
+    font-weight: 300;
+  }
+
+  .next {
+    margin-top: 20px;
+    font-weight: bold;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #dff0e2;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 center">
+        <img class="photo" src="./static/images/image.png" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 center text">
+        Sudoku is one of the most popular puzzles in the world. But it gets a
+        little complicated...
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 center title">Learn how to play here!</div>
+    </div>
+    <div class="row">
+      <div class="col-9"></div>
+      <div class="col-3">
+        <button class="next" onclick="location.href='/rules/1'">
+          Rules & Strategies
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+
+{% endblock %}

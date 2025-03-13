@@ -1,0 +1,294 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+    <link rel="stylesheet" src="{{ url_for('static', filename = 'main.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename = 'answers.js') }}"></script>
+    <script> 
+      var score = {{ score| tojson}} 
+      var users_answers = {{users_answers | tojson}}
+      var grid_answers = {{grid_answers | tojson}}
+    </script>
+
+  <style>
+  
+    .sudoku-board-cell {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #ddd;
+    background: white;
+    max-width: 15.11111%;
+    margin-right: -5px;
+    }
+
+    .sudoku-board-cell input {
+      background: none;
+      font-size: 19.2px;
+      font-size: 1.2rem;
+      text-align: center;
+      width: 2em;
+      max-width: 100%;
+      height: 2em;
+      border: 0;
+      position: relative;
+      z-index: 1; /*on top of candidates*/
+      padding: 3px;
+  }
+  * {
+    margin:0; padding:0;
+  }
+
+  [data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(6n+1) {
+ border-left-width: 2px;
+ border-left-color: #808080;
+}
+
+[data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n):nth-of-type(-n+6) {
+ border-top-width: 2px;
+ border-top-color: #808080;
+}
+
+[data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(3n) {
+ border-right-width: 2px;
+ border-right-color: #808080;
+}
+
+[data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n+7):nth-of-type(-n+12), 
+[data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n+19):nth-of-type(-n+24),
+[data-board-size="6"].sudoku-board .sudoku-board-cell:nth-of-type(n+31):nth-of-type(-n+36){
+ border-bottom-width: 2px;
+ border-bottom-color: #808080;
+}
+
+.wrap {
+ padding: 2em 1em;
+ width: 340px;
+ max-width: 100%;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+@media(min-width: 30em) {
+
+ .sudoku-board input {
+  font-size: 24px;
+  font-size: 1.5rem;
+ }
+
+}
+
+.subtitle-box{
+        text-align: center;
+        font-weight: 200;
+    }
+
+.btn {
+    margin-top: 20px;
+    font-weight: bold;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #dff0e2;
+  }
+
+  .margin{
+    margin-top: 10px;
+  }
+
+  .title-box{
+        padding-top: 20px;
+        height: 80px;
+        text-align: center;
+        font-size: xx-large;
+        font-weight: 700;
+    }
+
+  </style>
+  <body>
+
+    <div class="title-box">
+      These are your results
+    </div>
+
+    <div class="wrap">
+
+      <div id ="user-sudoku" class = "sudoku-board" data-board-size="6">
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-0" value="" maxlength="1">
+
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-1" value="6" maxlength="1" disabled>      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-2" value="3" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-3" value="4" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-4" value="1" maxlength="1" disabled>      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-5" value="" maxlength="1">
+        </div>
+
+        <!-- ----- -->
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-6" value="4" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-7" value="" maxlength="1">      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-8" value="5" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-9" value="" maxlength="1">
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-10" value="3" maxlength="1" disabled>      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-11" value="6" maxlength="1" disabled>
+        </div>
+
+        <!-- ----- -->
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-12" value="" maxlength="1">
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-13" value="" maxlength="1">      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-14" value="6" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-15" value="3" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-16" value="4" maxlength="1" disabled>      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-17" value="" maxlength="1">
+        </div>
+
+        <!-- ----- -->
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-18" value="3" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-19" value="" maxlength="1">      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-20" value="" maxlength="1">
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-21" value="" maxlength="1">
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-22" value="" maxlength="1">      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-23" value="2" maxlength="1" disabled>
+        </div>
+
+        <!-- ----- -->
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-24" value="" maxlength="1">
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-25" value="" maxlength="1">      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-26" value="4" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-27" value="1" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-28" value="2" maxlength="1" disabled>      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-29" value="3" maxlength="1" disabled>
+        </div>
+
+        <!-- ----- -->
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-30" value="1" maxlength="1" disabled>
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-31" value="" maxlength="1">      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*"  novalidate id="input-32" value="" maxlength="1">
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-33" value="" maxlength="1">
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-34" value="6" maxlength="1" disabled>      
+        </div>
+
+        <div class= "sudoku-board-cell">
+          <input type="text" pattern="\d*" novalidate id="input-35" value="" maxlength="1">
+        </div>
+        
+        <!-- ----- -->
+      </div>
+
+      <div>
+
+        <div class="subtitle-box margin">
+          This is your final score
+          <p>{{score}} / 17 </p>
+          <p id = "percent"></p>
+        </div>
+        
+      </div>
+      
+      <button class="btn" id="review-btn"><a href="/rules/1">Review Again</a></button>
+      <button class="btn" id="try-btn"><a href="/playgame">Try Again</a></button>
+
+      <button class="btn" id="home-btn"><a href="/">Go Back to Home</a></button>
+
+  </div>
+
+  </body>
+
+{% endblock %}
